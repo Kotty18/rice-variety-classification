@@ -1,6 +1,6 @@
 # Rice variety classification
 
-Can seven measurements of a rice grain distinguish Cammeo from Osmancik? I compared seven classifiers on 3,810 grains and tested how two preprocessing choices affected their predictions. Logistic regression on the original measurements achieved the highest accuracy, correctly classifying **701 of 762 grains (91.99%)**.
+Can seven measurements of a rice grain distinguish Cammeo from Osmancik? I compared seven classifiers on 3,810 grains and tested how two preprocessing choices affected their predictions. Logistic regression on the original measurements achieved the highest accuracy on this test split, correctly classifying **701 of 762 grains (91.99%)**.
 
 [Explore the notebook, model comparisons and confusion matrices](rice_classification.ipynb)
 
@@ -8,7 +8,7 @@ Can seven measurements of a rice grain distinguish Cammeo from Osmancik? I compa
 
 Standardising the features raised k-nearest neighbours accuracy from 86.48% to 90.94% and SVM accuracy from 86.88% to 91.08%. Both models use distances between observations, which depend on the units of the measurements.
 
-Grain area and convex area had a Pearson correlation of 0.9989 in the training data. I removed convex area and reran the two models with the lowest macro F1 after scaling. The same change had opposite effects.
+Grain area and convex area had a Pearson correlation of 0.9989 in the training data. I removed convex area and reran the two models with the lowest macro F1 after scaling. On this split, removing convex area reduced errors for Gaussian Naive Bayes and increased them for the decision tree.
 
 | Model | Errors with 7 features | Errors with 6 features | Macro F1 before | Macro F1 after |
 |---|---:|---:|---:|---:|
@@ -19,7 +19,7 @@ Grain area and convex area had a Pearson correlation of 0.9989 in the training d
 
 I used a stratified 80/20 split with seed 42 (3,048 training grains and 762 test grains) and fitted the scaler on the training rows. Each classifier used the same split. The notebook reports accuracy, macro precision, macro recall, macro F1 and ROC-AUC for both rounds.
 
-I used the test-set ranking to choose the two models for the feature-removal experiment. The four-error differences are exploratory results on this split. A fresh holdout would help assess whether they generalise.
+I used the test-set ranking to choose the two models for the feature-removal experiment. The four-error differences are exploratory results on this split. The four additional tree errors on these grains are insufficient evidence that removing convex area generally hurts the tree.
 
 ## Run locally
 
